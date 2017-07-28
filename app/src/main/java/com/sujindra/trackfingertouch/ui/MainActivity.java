@@ -1,7 +1,9 @@
-package com.sujindra.trackfingertouch;
+package com.sujindra.trackfingertouch.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.sujindra.trackfingertouch.R;
 
 public class MainActivity extends AppCompatActivity {
 
