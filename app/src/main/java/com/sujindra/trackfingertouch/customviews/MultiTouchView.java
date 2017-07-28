@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.util.SparseArray;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.sujindra.trackfingertouch.utils.AppUtil;
 
 /**
@@ -24,7 +26,8 @@ public class MultiTouchView extends View {
 
     private static final float CIRCLE_RADIUS = 60;
     private static final float TEXT_SIZE = 48;
-    private static final String DISPLAY_TEXT = "Touch Me";
+    private static final String DISPLAY_TEXT = "Touch on the screen";
+    private FirebaseAnalytics firebaseAnalytics;
     private SparseArray<PointF> activePointersSparseArray;
     private Paint circlePaint, textPaint;
     private int[] paintColors = {Color.GREEN, Color.BLUE, Color.RED,
@@ -33,22 +36,28 @@ public class MultiTouchView extends View {
     public MultiTouchView(Context context) {
         super(context);
         initUi();
+        firebaseAnalytics = FirebaseAnalytics.getInstance(context);
+
     }
 
     public MultiTouchView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         initUi();
+        firebaseAnalytics = FirebaseAnalytics.getInstance(context);
+
     }
 
     public MultiTouchView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initUi();
+        firebaseAnalytics = FirebaseAnalytics.getInstance(context);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public MultiTouchView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initUi();
+        firebaseAnalytics = FirebaseAnalytics.getInstance(context);
     }
 
     private void initUi() {
@@ -78,7 +87,7 @@ public class MultiTouchView extends View {
 
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_POINTER_DOWN: {
-
+                trackEvent(event.getX(pointerIndex), event.getY(pointerIndex));
                 PointF pointF = new PointF();
                 pointF.x = event.getX(pointerIndex);
                 pointF.y = event.getY(pointerIndex);
@@ -99,6 +108,7 @@ public class MultiTouchView extends View {
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_POINTER_UP:
             case MotionEvent.ACTION_CANCEL: {
+                trackEvent(event.getX(pointerIndex), event.getY(pointerIndex));
                 activePointersSparseArray.remove(pointerId);
                 break;
             }
@@ -107,12 +117,19 @@ public class MultiTouchView extends View {
         return true;
     }
 
+    private void trackEvent(float x, float y) {
+        Bundle params = new Bundle();
+        params.putString("x", String.valueOf(x));
+        params.putString("y", String.valueOf(y));
+        firebaseAnalytics.logEvent("touch_event", params);
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         // draw all pointers
         if (activePointersSparseArray != null) {
-            for (int i=0;i<activePointersSparseArray.size();i++) {
+            for (int i = 0; i < activePointersSparseArray.size(); i++) {
                 PointF pointF = activePointersSparseArray.valueAt(i);
                 if (pointF != null) {
                     circlePaint.setColor(paintColors[activePointersSparseArray.keyAt(i) % 6]);

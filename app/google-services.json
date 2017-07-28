@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "753413467178",
+    "firebase_url": "https://touchtracker-fd0b8.firebaseio.com",
+    "project_id": "touchtracker-fd0b8",
+    "storage_bucket": "touchtracker-fd0b8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:753413467178:android:9dc3af5dbc4104a4",
+        "android_client_info": {
+          "package_name": "com.sujindra.trackfingertouch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "753413467178-pbr514tjmlthgqbrruc3bc1bjv0t9ahg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sujindra.trackfingertouch",
+            "certificate_hash": "cc618c993315eb7dff2a4b86bfc085fee152b0cf"
+          }
+        },
+        {
+          "client_id": "753413467178-untlvec8cv8i2r64mlidhem7stbgfc0a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJmYz035Mk72fpwuVp0dmb-o6-DLm3Ubg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "753413467178-untlvec8cv8i2r64mlidhem7stbgfc0a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
